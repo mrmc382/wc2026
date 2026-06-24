@@ -13,12 +13,12 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Syne:wght@700;800&display=swap" rel="stylesheet"/>
 <style>
 :root{
-  --bg:#0D0F14;--sf:#161A22;--sf2:#1E2330;--bd:#252A38;--bd2:#2E3547;
-  --tp:#F0F2F8;--ts:#8892A4;--tm:#555F74;
-  --gold:#F5C842;--gold2:#C49A00;
-  --green:#2ECC71;--green2:#1A7A42;--greenb:rgba(46,204,113,.12);
-  --red:#E74C3C;--red2:#8B2318;--redb:rgba(231,76,60,.12);
-  --blue:#3B82F6;--blueb:rgba(59,130,246,.1);
+  --bg:#F0F4F8;--sf:#FFFFFF;--sf2:#E8EDF3;--bd:#D0D8E4;--bd2:#B8C4D4;
+  --tp:#1A2233;--ts:#4A5568;--tm:#8896A8;
+  --gold:#C8920A;--gold2:#A67800;
+  --green:#1A8C4E;--green2:#146B3C;--greenb:rgba(26,140,78,.1);
+  --red:#C0392B;--red2:#922B21;--redb:rgba(192,57,43,.1);
+  --blue:#2563EB;--blueb:rgba(37,99,235,.1);
   --r:14px;--rs:10px;
   --nav:48px;
 }
@@ -27,21 +27,21 @@ html{scroll-behavior:smooth}
 body{font-family:"Inter",sans-serif;background:var(--bg);color:var(--tp);min-height:100vh;-webkit-font-smoothing:antialiased}
 
 /* ── SYNC BAR ─────────────────────────────────────────── */
-.syncbar{background:var(--sf);border-bottom:1px solid var(--bd);padding:0 16px;height:38px;display:flex;align-items:center;gap:10px;position:sticky;top:0;z-index:300}
+.syncbar{background:#1A2233;border-bottom:1px solid #2E3B55;padding:0 16px;height:38px;display:flex;align-items:center;gap:10px;position:sticky;top:0;z-index:300}
 .sdot{width:8px;height:8px;border-radius:50%;flex-shrink:0;transition:background .3s}
 .sdot.slive{background:var(--green);box-shadow:0 0 6px var(--green);animation:pulse 1.5s ease infinite}
 .sdot.serr{background:var(--red)}
 .sdot.sidle{background:var(--tm)}
 @keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
-#syncBtn{padding:4px 14px;border-radius:100px;border:1px solid var(--bd2);background:transparent;color:var(--ts);font-family:"Inter",sans-serif;font-size:11px;font-weight:600;cursor:pointer;transition:all .2s;white-space:nowrap}
+#syncBtn{padding:4px 14px;border-radius:100px;border:1px solid #3E526A;background:transparent;color:#9AABBF;font-family:"Inter",sans-serif;font-size:11px;font-weight:600;cursor:pointer;transition:all .2s;white-space:nowrap}
 #syncBtn:hover{border-color:var(--green);color:var(--green)}
 #syncBtn.active{background:var(--greenb);border-color:var(--green);color:var(--green)}
-#syncStatus{font-size:11px;color:var(--ts);flex:1}
-#lastUpd{font-size:10px;color:var(--tm);margin-left:auto;white-space:nowrap}
+#syncStatus{font-size:11px;color:#9AABBF;flex:1}
+#lastUpd{font-size:10px;color:#6A7F96;margin-left:auto;white-space:nowrap}
 
 /* ── HERO ─────────────────────────────────────────────── */
-.hero{padding:32px 20px 24px;background:linear-gradient(135deg,#0D0F14 0%,#161A22 100%);border-bottom:1px solid var(--bd);position:relative;overflow:hidden}
-.hero::before{content:"";position:absolute;top:-80px;right:-80px;width:340px;height:340px;border-radius:50%;background:radial-gradient(circle,rgba(245,200,66,.08),transparent 70%)}
+.hero{padding:32px 20px 24px;background:linear-gradient(135deg,#1A2233 0%,#243050 100%);border-bottom:1px solid var(--bd);position:relative;overflow:hidden}
+.hero::before{content:"";position:absolute;top:-80px;right:-80px;width:340px;height:340px;border-radius:50%;background:radial-gradient(circle,rgba(200,146,10,.15),transparent 70%)}
 .hi{max-width:1100px;margin:0 auto;position:relative}
 .htag{font-size:10px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);margin-bottom:8px}
 .htitle{font-family:"Syne",sans-serif;font-size:clamp(22px,4vw,40px);font-weight:800;line-height:1.1;margin-bottom:6px}
@@ -99,9 +99,9 @@ body{font-family:"Inter",sans-serif;background:var(--bg);color:var(--tp);min-hei
 /* ── GROUP TABLES ─────────────────────────────────────── */
 .ggrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:12px}
 .gc{background:var(--sf);border:1px solid var(--bd);border-radius:var(--r);overflow:hidden}
-.ghd{background:var(--sf2);border-bottom:1px solid var(--bd);padding:9px 14px;display:flex;justify-content:space-between;align-items:center}
-.gtitle{font-family:"Syne",sans-serif;font-size:13px;font-weight:800;letter-spacing:.04em}
-.gcount{font-size:10px;color:var(--tm)}
+.ghd{background:#1A2233;border-bottom:1px solid #2E3B55;padding:9px 14px;display:flex;justify-content:space-between;align-items:center}
+.gtitle{font-family:"Syne",sans-serif;font-size:13px;font-weight:800;letter-spacing:.04em;color:#F0F4F8}
+.gcount{font-size:10px;color:#6A8299}
 .gthd{display:grid;grid-template-columns:20px 20px 1fr 28px 28px 28px 28px 44px 32px 36px;gap:1px;padding:4px 14px;font-size:8.5px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--tm);background:rgba(255,255,255,.03)}
 .gr{display:grid;grid-template-columns:20px 20px 1fr 28px 28px 28px 28px 44px 32px 36px;gap:1px;align-items:center;padding:7px 14px;border-top:1px solid var(--bd);font-size:12px}
 .gr.adv{background:rgba(46,204,113,.05)}
@@ -181,9 +181,9 @@ body{font-family:"Inter",sans-serif;background:var(--bg);color:var(--tp);min-hei
 .cktext span{font-size:10.5px;color:var(--ts)}
 
 /* ── MODAL ────────────────────────────────────────────── */
-#modal{position:fixed;inset:0;background:rgba(0,0,0,.7);backdrop-filter:blur(6px);z-index:900;display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity .2s}
+#modal{position:fixed;inset:0;background:rgba(26,34,51,.6);backdrop-filter:blur(6px);z-index:900;display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity .2s}
 #modal.on{opacity:1;pointer-events:all}
-.mdlg{background:var(--sf);border:1px solid var(--bd2);border-radius:20px;padding:24px;width:360px;max-width:calc(100vw - 24px);box-shadow:0 30px 80px rgba(0,0,0,.5);transform:translateY(10px);transition:transform .2s}
+.mdlg{background:#FFFFFF;border:1px solid var(--bd2);border-radius:20px;padding:24px;width:360px;max-width:calc(100vw - 24px);box-shadow:0 30px 80px rgba(0,0,0,.5);transform:translateY(10px);transition:transform .2s}
 #modal.on .mdlg{transform:translateY(0)}
 .mhead{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:18px}
 #mTi{font-family:"Syne",sans-serif;font-size:15px;font-weight:800;line-height:1.3;flex:1;margin-right:10px}
@@ -237,20 +237,20 @@ body{font-family:"Inter",sans-serif;background:var(--bg);color:var(--tp);min-hei
 
 <!-- NAV -->
 <nav class="nav"><div class="navi">
-  <button class="nb on" id="nb-bracket">&#127942; Bracket</button>
-  <button class="nb" id="nb-groups">&#128202; Groups</button>
+  <button class="nb on" id="nb-groups">&#128202; Groups</button>
   <button class="nb" id="nb-schedule">&#128197; Schedule</button>
+  <button class="nb" id="nb-bracket">&#127942; Bracket</button>
   <button class="nb" id="nb-setup">&#128250; Setup</button>
 </div></nav>
 
 <!-- BRACKET -->
-<div class="pg on" id="pg-bracket"><div class="w">
+<div class="pg" id="pg-bracket"><div class="w">
   <div class="sec">Live Bracket &bull; Click any match to enter score</div>
   <div class="bscroll"><div class="bgrid" id="bracketGrid"></div></div>
 </div></div>
 
 <!-- GROUPS -->
-<div class="pg" id="pg-groups"><div class="w">
+<div class="pg on" id="pg-groups"><div class="w">
   <div class="sec">Group Stage Standings &bull; MD1+MD2 results loaded &bull; Click any fixture to edit</div>
   <div class="ggrid" id="groupGrid"></div>
 </div></div>
@@ -782,7 +782,7 @@ document.addEventListener("DOMContentLoaded", function(){
   renderAll();
 
   // Nav
-  ["bracket","groups","schedule","setup"].forEach(function(id){
+  ["groups","schedule","bracket","setup"].forEach(function(id){
     var b=document.getElementById("nb-"+id);
     if(b) b.addEventListener("click",function(){showTab(id);});
   });
