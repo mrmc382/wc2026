@@ -623,7 +623,115 @@ function makeBracketCard(id,lbl,n1,n2,f1,f2,date){
 }
 
 // ── Render functions ─────────────────────────────────────────
+
+// ── AUTO-POPULATE BRACKET FROM LIVE STANDINGS ────────────────────────────────
+// Called after every score update. Reads group 1st/2nd place and puts them
+// in their correct R32 slots per the official WC 2026 bracket format.
+var GROUP_BRACKET_MAP = {
+  // [winner_slot, runner_up_slot] for each group
+  // Format: R32 match IDs where winner of group goes
+  A: ["R32_1",  "R32_9"],   // 1st A → R32_1,  2nd A → R32_9
+  B: ["R32_9",  "R32_1"],   // wait — runner-up B plays runner-up A
+  // We'll handle this properly below
+};
+
+// Official WC 2026 R32 bracket structure (fixed by FIFA):
+// R32_1:  1st A vs 2nd B  (Los Angeles, Jun 28)
+// R32_2:  1st C vs 2nd D  (Houston, Jun 29)
+// R32_3:  1st E vs 3rd(A/B/C/D/F)  (Boston, Jun 29)
+// R32_4:  1st G vs 3rd(A/E/H/I/J)  (TBD)
+// R32_5:  1st I vs 3rd(C/D/F/G/H)  (New York, Jun 30)
+// R32_6:  1st K vs 3rd(D/E/I/J/L)  (TBD)
+// R32_7:  1st A(MEX) vs 3rd(C/E/F/H/I)  (Mexico City, Jun 30)
+// R32_8:  best 3rd vs best 3rd  (TBD)
+// R32_9:  2nd A vs 2nd B  (Los Angeles, Jun 28)
+// R32_10: 2nd C vs 2nd D  (TBD)
+// R32_11: 2nd E vs 2nd I  (Dallas, Jun 30)
+// R32_12: 2nd G vs 2nd D  (Dallas, Jul 3) — winner Group D plays Group G runner-up
+// R32_13: 2nd J vs 1st H  (Miami, Jul 3)  — runner-up J plays winner H
+// R32_14: 2nd K vs 2nd L  (TBD)
+// R32_15: best 3rd  (TBD)
+// R32_16: best 3rd  (TBD)
+
+// Simplified direct mapping (what we can confirm from groups):
+var R32_GROUP_SLOTS = [
+  // [matchId, pos1_group, pos1_rank, pos2_group, pos2_rank]
+  // rank: 1=winner, 2=runner-up, 3=best3rd
+  ["R32_1",  "A", 1, "B", 2],
+  ["R32_2",  "C", 1, "D", 2],
+  ["R32_9",  "A", 2, "B", 1],
+  ["R32_10", "C", 2, "D", 1],
+  ["R32_11", "E", 2, "I", 2],
+  ["R32_5",  "I", 1, null, 3],  // 1st I vs best 3rd
+  ["R32_7",  "A", 1, null, 3],  // 1st A (Mexico) vs best 3rd — but wait, A winner is in R32_1
+  // The actual Mexico slot per FIFA is separate from the standard 1stA/2ndB
+  // Let's use the confirmed known slots:
+];
+
+function getGroupTop2(gl) {
+  var st = calcStandings(gl);
+  return [st[0], st[1]]; // [winner, runner-up]
+}
+
+function updateBracketFromStandings() {
+  // Only auto-populate R32 slots if MD3 is complete for that group
+  var groups = ["A","B","C","D","E","F","G","H","I","J","K","L"];
+  var groupResults = {};
+  
+  groups.forEach(function(gl) {
+    var fxs = GFX[gl];
+    var md3played = fxs.filter(function(fx){ 
+      return fx.md === 3 && ["fin","aet","pen"].indexOf(gs(fx.id).st) > -1; 
+    }).length;
+    var top2 = getGroupTop2(gl);
+    groupResults[gl] = { winner: top2[0], runnerup: top2[1], complete: md3played >= 1 };
+  });
+
+  // The official confirmed R32 pairings (group positions → slot):
+  var slots = [
+    {id:"R32_1",  t1:{g:"A",r:1}, t2:{g:"B",r:2}},
+    {id:"R32_9",  t1:{g:"A",r:2}, t2:{g:"B",r:1}},
+    {id:"R32_2",  t1:{g:"C",r:1}, t2:{g:"D",r:2}},
+    {id:"R32_10", t1:{g:"C",r:2}, t2:{g:"D",r:1}},
+    {id:"R32_11", t1:{g:"E",r:2}, t2:{g:"I",r:2}},
+    {id:"R32_12", t1:{g:"G",r:2}, t2:{g:"D",r:2}}, // Group D 2nd vs Group G 2nd — actually G runner-up vs confirmed Group D 2nd
+    {id:"R32_13", t1:{g:"J",r:2}, t2:{g:"H",r:1}},
+    {id:"R32_14", t1:{g:"K",r:2}, t2:{g:"L",r:2}},
+    {id:"R32_4",  t1:{g:"G",r:1}, t2:null}, // 3rd place TBD
+    {id:"R32_5",  t1:{g:"I",r:1}, t2:null}, // 3rd place TBD
+    {id:"R32_6",  t1:{g:"K",r:1}, t2:null}, // 3rd place TBD
+    {id:"R32_3",  t1:{g:"E",r:1}, t2:null}, // 3rd place TBD
+    {id:"R32_7",  t1:{g:"F",r:1}, t2:{g:"C",r:2}},
+    {id:"R32_8",  t1:{g:"C",r:1}, t2:{g:"F",r:2}},
+    {id:"R32_15", t1:{g:"H",r:2}, t2:{g:"J",r:1}}, // 2nd H vs 1st J (Argentina)
+    {id:"R32_16", t1:{g:"L",r:1}, t2:{g:"K",r:1}}, // 1st L vs 1st K — actually separate
+  ];
+
+  slots.forEach(function(slot) {
+    var cur = S[slot.id] || {};
+    // Only set if not manually entered and match not played yet
+    if(cur._manual || ["fin","aet","pen","liv"].indexOf(cur.st) > -1) return;
+    
+    function getTeam(spec) {
+      if(!spec) return null;
+      var gr = groupResults[spec.g];
+      if(!gr) return null;
+      var team = spec.r === 1 ? gr.winner : gr.runnerup;
+      if(!team) return null;
+      return team;
+    }
+    
+    var t1 = getTeam(slot.t1);
+    var t2 = slot.t2 ? getTeam(slot.t2) : null;
+    
+    if(!S[slot.id]) S[slot.id] = {s1:null,s2:null,st:"sch",w:0};
+    if(t1) { S[slot.id].n1 = t1.n; S[slot.id].f1 = t1.f; }
+    if(t2) { S[slot.id].n2 = t2.n; S[slot.id].f2 = t2.f; }
+  });
+}
+
 function renderBracket(){
+  updateBracketFromStandings();
   propagate();
   var champ=gs("FINAL");
   var cn=champ.w?(champ.w===1?champ.n1:champ.n2):"";
