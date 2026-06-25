@@ -457,6 +457,68 @@ function propagate(){
 
 // ── ESPN live sync ───────────────────────────────────────────
 var ESPN_NAMES = {
+  // Group A
+  "Mexico":"MEX","Mexico National Soccer Team":"MEX","MEX":"MEX",
+  "South Africa":"RSA","ZAF":"RSA",
+  "Korea Republic":"KOR","South Korea":"KOR","Republic of Korea":"KOR",
+  "Czech Republic":"CZE","Czechia":"CZE",
+  // Group B
+  "Canada":"CAN",
+  "Bosnia and Herzegovina":"BIH","Bosnia-Herzegovina":"BIH","Bosnia & Herzegovina":"BIH",
+  "Qatar":"QAT",
+  "Switzerland":"SUI",
+  // Group C
+  "Brazil":"BRA","Brasil":"BRA",
+  "Morocco":"MAR",
+  "Haiti":"HAI",
+  "Scotland":"SCO",
+  // Group D
+  "United States":"USA","USA":"USA","United States of America":"USA",
+  "Paraguay":"PAR",
+  "Australia":"AUS",
+  "Turkey":"TUR","Turkiye":"TUR","T\u00fcrkiye":"TUR",
+  // Group E
+  "Germany":"GER",
+  "Curacao":"CUW","Cura\u00e7ao":"CUW",
+  "Ivory Coast":"CIV","C\u00f4te d'Ivoire":"CIV","Cote d'Ivoire":"CIV","Côte d'Ivoire":"CIV",
+  "Ecuador":"ECU",
+  // Group F
+  "Netherlands":"NED","Holland":"NED",
+  "Japan":"JPN",
+  "Sweden":"SWE",
+  "Tunisia":"TUN",
+  // Group G
+  "Belgium":"BEL",
+  "Egypt":"EGY",
+  "Iran":"IRN","IR Iran":"IRN",
+  "New Zealand":"NZL",
+  // Group H
+  "Spain":"ESP","Espa\u00f1a":"ESP","Espana":"ESP",
+  "Cape Verde":"CPV","Cabo Verde":"CPV",
+  "Saudi Arabia":"KSA",
+  "Uruguay":"URU",
+  // Group I
+  "France":"FRA",
+  "Senegal":"SEN",
+  "Iraq":"IRQ",
+  "Norway":"NOR",
+  // Group J
+  "Argentina":"ARG",
+  "Algeria":"ALG",
+  "Austria":"AUT",
+  "Jordan":"JOR",
+  // Group K
+  "Portugal":"POR",
+  "DR Congo":"COD","Congo DR":"COD","Democratic Republic of Congo":"COD","Congo, DR":"COD",
+  "Uzbekistan":"UZB",
+  "Colombia":"COL",
+  // Group L
+  "England":"ENG",
+  "Croatia":"CRO",
+  "Ghana":"GHA",
+  "Panama":"PAN",
+  // Extra abbreviations ESPN sometimes uses
+
   "Mexico":"MEX","Mexico National Soccer Team":"MEX","South Africa":"RSA","Korea Republic":"KOR","South Korea":"KOR","Czechia":"CZE","Czech Republic":"CZE",
   "Canada":"CAN","Bosnia-Herzegovina":"BIH","Bosnia & Herzegovina":"BIH","Qatar":"QAT","Switzerland":"SUI",
   "Brazil":"BRA","Brasil":"BRA","Morocco":"MAR","Haiti":"HAI","Scotland":"SCO",
@@ -524,25 +586,54 @@ function parseESPN(data){
 }
 
 function doSync(){
-  setStatus("Syncing with ESPN...", "live");
-  var urls = [
-    "https://site.api.espn.com/apis/site/v2/sports/soccer/fifa.world/scoreboard",
-    "https://site.api.espn.com/apis/site/v2/sports/soccer/fifa.world/scoreboard?limit=100"
-  ];
-  Promise.all(urls.map(function(url){
-    return fetch(url, {cache:"no-store"}).then(function(r){
-      if(!r.ok) throw new Error("HTTP "+r.status);
-      return r.json();
-    }).then(function(d){ return parseESPN(d); })
-    .catch(function(){ return 0; });
-  })).then(function(counts){
-    var total = counts.reduce(function(a,b){return a+b;},0);
+  setStatus("Syncing...", "live");
+
+  // Build list of dates to fetch: last 20 days + today
+  // ESPN only returns games for the requested date, so we query each game day
+  var today = new Date();
+  var dates = [];
+  for(var i=20; i>=0; i--){
+    var d = new Date(today);
+    d.setDate(d.getDate() - i);
+    var y = d.getFullYear();
+    var m = String(d.getMonth()+1).padStart(2,'0');
+    var day = String(d.getDate()).padStart(2,'0');
+    dates.push(y+""+m+""+day);
+  }
+
+  // Fetch each date (batch with small delay to avoid rate limiting)
+  var updated = 0;
+  var done = 0;
+  var total = dates.length;
+
+  function fetchDate(dateStr){
+    var url = "https://site.api.espn.com/apis/site/v2/sports/soccer/fifa.world/scoreboard?dates="+dateStr+"&limit=20";
+    return fetch(url, {cache:"no-store"})
+      .then(function(r){ return r.ok ? r.json() : {events:[]}; })
+      .then(function(d){ return parseESPN(d); })
+      .catch(function(){ return 0; });
+  }
+
+  // Run fetches sequentially to avoid hammering ESPN
+  var chain = Promise.resolve();
+  dates.forEach(function(dateStr){
+    chain = chain.then(function(){
+      return fetchDate(dateStr).then(function(n){
+        updated += n;
+        done++;
+      });
+    });
+  });
+
+  chain.then(function(){
     lastSync = new Date();
     save(); renderAll();
     var t = lastSync.toLocaleTimeString("en-US",{hour:"2-digit",minute:"2-digit"});
-    setStatus(total>0?"Updated "+total+" match"+(total>1?"es":"")+" \u00b7 "+t:"Live \u00b7 "+t, "live");
+    setStatus(updated > 0
+      ? "✅ "+updated+" result"+(updated>1?"s":"")+" updated · "+t
+      : "✅ All current · "+t, "live");
   }).catch(function(e){
-    setStatus("ESPN error: "+e.message, "err");
+    setStatus("❌ Sync error: "+e.message, "err");
   });
 }
 
