@@ -9,6 +9,9 @@
 <meta name="theme-color" content="#0D0F14"/>
 <link rel="manifest" href="data:application/manifest+json,%7B%22name%22%3A%22World+Cup+26+Viewer%22%2C%22short_name%22%3A%22World+Cup+26+Viewer%22%2C%22start_url%22%3A%22.%22%2C%22display%22%3A%22standalone%22%2C%22background_color%22%3A%22%230D0F14%22%2C%22theme_color%22%3A%22%230D0F14%22%2C%22icons%22%3A%5B%7B%22src%22%3A%22data%3Aimage%2Fsvg%2Bxml%2C%253Csvg+xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27+viewBox%3D%270+0+100+100%27%253E%253Ctext+y%3D%27.9em%27+font-size%3D%2790%27%253E%25F0%259F%258F%2586%253C%2Ftext%253E%253C%2Fsvg%253E%22%2C%22sizes%22%3A%22any%22%2C%22type%22%3A%22image%2Fsvg%2Bxml%22%7D%5D%7D"/>
 <meta name="viewport" content="width=device-width,initial-scale=1"/>
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate"/>
+<meta http-equiv="Pragma" content="no-cache"/>
+<meta http-equiv="Expires" content="0"/>
 <title>World Cup 26 Viewer</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Syne:wght@700;800&display=swap" rel="stylesheet"/>
 <style>
@@ -217,6 +220,27 @@ body{font-family:"Inter",sans-serif;background:var(--bg);color:var(--tp);min-hei
 .t-gold{color:#F5C842}
 .t-white{color:#FFFFFF}
 </style>
+
+<script>
+// On first load without cache buster, add one
+(function() {
+  var url = window.location.href;
+  if (url.indexOf('?v=') === -1 && url.indexOf('&v=') === -1) {
+    // Don't redirect — just set a flag so we know this is a fresh load
+    // The auto-updater handles actual reloads
+  }
+  // Clear any stale localStorage scores that are older than the app version
+  try {
+    var stored = localStorage.getItem('wc26_build');
+    var current = '1782481428';
+    if (stored !== current) {
+      // Don't wipe scores — just update the build marker
+      localStorage.setItem('wc26_build', current);
+    }
+  } catch(e) {}
+})();
+</script>
+
 </head>
 <body>
 
@@ -1549,27 +1573,47 @@ document.addEventListener("DOMContentLoaded", function(){
 
 </script>
 
+
+
+
 <script>
-if('serviceWorker' in navigator){
-  var swCode = `
-self.addEventListener('install', function(e){
-  e.waitUntil(
-    caches.open('wc2026-v1').then(function(c){
-      return c.addAll(['/']);
-    }).catch(function(){})
-  );
-});
-self.addEventListener('fetch', function(e){
-  e.respondWith(
-    caches.match(e.request).then(function(r){
-      return r || fetch(e.request).catch(function(){return r;});
+// Auto-update: check for new version every 5 minutes
+// If a new version is deployed to GitHub, reload automatically
+var BUILD_TS = 1782481428;
+var UPDATE_CHECK_URL = 'https://api.github.com/repos/mrmc382/wc2026/commits/main?per_page=1';
+var lastCommitSha = null;
+
+function checkForUpdate() {
+  fetch(UPDATE_CHECK_URL, {cache: 'no-store'})
+    .then(function(r) { return r.ok ? r.json() : null; })
+    .then(function(data) {
+      if (!data) return;
+      var sha = data.sha;
+      if (!lastCommitSha) {
+        lastCommitSha = sha;
+        return;
+      }
+      if (sha !== lastCommitSha) {
+        // New version available — reload without cache
+        lastCommitSha = sha;
+        setStatus('\u2B06\uFE0F New version available\u2026 reloading', 'live');
+        setTimeout(function() {
+          window.location.href = window.location.href.split('?')[0] + '?v=' + Date.now();
+        }, 1500);
+      }
     })
-  );
-});
-  `;
-  var blob = new Blob([swCode], {type:'application/javascript'});
-  var swUrl = URL.createObjectURL(blob);
-  navigator.serviceWorker.register(swUrl).catch(function(){});
+    .catch(function() {}); // silent fail
+}
+
+// Check on load (after 3s) and every 5 minutes
+setTimeout(checkForUpdate, 3000);
+setInterval(checkForUpdate, 300000);
+
+// Also: unregister any old service workers that might be caching stale content
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.getRegistrations().then(function(regs) {
+    regs.forEach(function(reg) { reg.unregister(); });
+  });
 }
 </script>
 
