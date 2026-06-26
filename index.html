@@ -457,6 +457,290 @@ function propagate(){
 
 // ── ESPN live sync ───────────────────────────────────────────
 
+
+// ── LIVE SYNC — openfootball/worldcup.json (CC0, no key, no CORS) ────────────
+// Source: https://raw.githubusercontent.com/openfootball/worldcup.json/master/2026/worldcup.json
+// Updated daily by the openfootball community with real results.
+// Fallback: ESPN scoreboard API for today's live matches.
+
+var SYNC_URL = "https://raw.githubusercontent.com/openfootball/worldcup.json/master/2026/worldcup.json";
+var ESPN_URL = "https://site.api.espn.com/apis/site/v2/sports/soccer/fifa.world/scoreboard";
+
+var syncTimer = null;
+var syncActive = false;
+var lastSync = null;
+
+function setStatus(msg, state) {
+  var el = document.getElementById("syncStatus");
+  var dot = document.getElementById("syncDot");
+  if (el) el.textContent = msg;
+  if (dot) dot.className = "sdot " + (state === "live" ? "slive" : state === "err" ? "serr" : "sidle");
+}
+
+// openfootball team name → our code
+var OFB_MAP = {
+  "Mexico":"MEX","South Africa":"RSA","South Korea":"KOR","Korea Republic":"KOR",
+  "Czech Republic":"CZE","Czechia":"CZE",
+  "Canada":"CAN","Bosnia & Herzegovina":"BIH","Bosnia and Herzegovina":"BIH","Qatar":"QAT","Switzerland":"SUI",
+  "Brazil":"BRA","Morocco":"MAR","Haiti":"HAI","Scotland":"SCO",
+  "United States":"USA","USA":"USA","Paraguay":"PAR","Australia":"AUS","Turkey":"TUR","Turkiye":"TUR",
+  "Germany":"GER","Curacao":"CUW","Ivory Coast":"CIV","Ecuador":"ECU",
+  "Netherlands":"NED","Japan":"JPN","Sweden":"SWE","Tunisia":"TUN",
+  "Belgium":"BEL","Egypt":"EGY","Iran":"IRN","New Zealand":"NZL",
+  "Spain":"ESP","Cape Verde":"CPV","Saudi Arabia":"KSA","Uruguay":"URU",
+  "France":"FRA","Senegal":"SEN","Iraq":"IRQ","Norway":"NOR",
+  "Argentina":"ARG","Algeria":"ALG","Austria":"AUT","Jordan":"JOR",
+  "Portugal":"POR","DR Congo":"COD","Congo DR":"COD","Uzbekistan":"UZB","Colombia":"COL",
+  "England":"ENG","Croatia":"CRO","Ghana":"GHA","Panama":"PAN"
+};
+
+// ESPN abbreviation → our code (for live today's matches)
+var ESPN_ABB = {
+  "MEX":"MEX","RSA":"RSA","KOR":"KOR","CZE":"CZE","CAN":"CAN","BIH":"BIH","QAT":"QAT","SUI":"SUI",
+  "BRA":"BRA","MAR":"MAR","HAI":"HAI","SCO":"SCO","USA":"USA","PAR":"PAR","AUS":"AUS","TUR":"TUR",
+  "GER":"GER","CUW":"CUW","CIV":"CIV","ECU":"ECU","NED":"NED","JPN":"JPN","SWE":"SWE","TUN":"TUN",
+  "BEL":"BEL","EGY":"EGY","IRN":"IRN","NZL":"NZL","ESP":"ESP","CPV":"CPV","KSA":"KSA","URU":"URU",
+  "FRA":"FRA","SEN":"SEN","IRQ":"IRQ","NOR":"NOR","ARG":"ARG","ALG":"ALG","AUT":"AUT","JOR":"JOR",
+  "POR":"POR","COD":"COD","UZB":"UZB","COL":"COL","ENG":"ENG","CRO":"CRO","GHA":"GHA","PAN":"PAN"
+};
+
+function parseOFB(data) {
+  // openfootball format: { matches: [ {team1, team2, score:{ft:[s1,s2]}, ...} ] }
+  var updated = 0;
+  var matches = data.matches || [];
+
+  matches.forEach(function(m) {
+    var n1 = m.team1 || "";
+    var n2 = m.team2 || "";
+    // Strip country code suffixes like " (EGY)" from club WC
+    n1 = n1.replace(/\s*\([A-Z]{3}\)$/, "").trim();
+    n2 = n2.replace(/\s*\([A-Z]{3}\)$/, "").trim();
+
+    var c1 = OFB_MAP[n1];
+    var c2 = OFB_MAP[n2];
+    if (!c1 || !c2) return;
+
+    var fid = FX_KEY[c1 + "|" + c2];
+    if (!fid) return;
+
+    var score = m.score;
+    if (!score || !score.ft) return; // no result yet
+
+    var s1 = score.ft[0];
+    var s2 = score.ft[1];
+    var st = "fin";
+    if (score.et) { st = "aet"; s1 = score.et[0]; s2 = score.et[1]; }
+    if (score.p)  { st = "pen"; }
+
+    var w = 0;
+    if (s1 > s2) w = 1; else if (s2 > s1) w = 2;
+
+    var cur = S[fid] || {};
+    if (cur._manual) return; // respect manual overrides
+    if (cur.s1 === s1 && cur.s2 === s2 && cur.st === st && cur._ofb) return; // already up to date
+
+    var t1 = TM[c1], t2 = TM[c2];
+    S[fid] = {
+      s1: s1, s2: s2, st: st, w: w, _ofb: true,
+      n1: t1 ? t1.n : n1, n2: t2 ? t2.n : n2,
+      f1: t1 ? t1.f : "?", f2: t2 ? t2.f : "?"
+    };
+    updated++;
+  });
+  return updated;
+}
+
+function parseESPN(data) {
+  // Parse ESPN for today's LIVE scores (openfootball updates daily, ESPN is real-time)
+  var updated = 0;
+  (data.events || []).forEach(function(ev) {
+    (ev.competitions || []).forEach(function(comp) {
+      var comps = comp.competitors || [];
+      if (comps.length < 2) return;
+      var home = comps.find(function(c) { return c.homeAway === "home"; }) || comps[0];
+      var away = comps.find(function(c) { return c.homeAway === "away"; }) || comps[1];
+      var c1 = ESPN_ABB[home.team && home.team.abbreviation] || null;
+      var c2 = ESPN_ABB[away.team && away.team.abbreviation] || null;
+      if (!c1 || !c2) return;
+      var fid = FX_KEY[c1 + "|" + c2];
+      if (!fid) return;
+      var sname = ((comp.status || {}).type || {}).name || "";
+      var st = sname === "STATUS_IN_PROGRESS" || sname === "STATUS_HALFTIME" ? "liv"
+             : sname === "STATUS_FINAL"     ? "fin"
+             : sname === "STATUS_FINAL_AET" ? "aet"
+             : sname === "STATUS_FINAL_PEN" ? "pen"
+             : "sch";
+      if (st === "sch") return;
+      var s1 = parseInt(home.score) || 0;
+      var s2 = parseInt(away.score) || 0;
+      var w = 0;
+      if (["fin","aet","pen"].indexOf(st) > -1) { if (s1 > s2) w = 1; else if (s2 > s1) w = 2; }
+      var cur = S[fid] || {};
+      if (cur._manual) return;
+      // ESPN live overrides openfootball for in-progress games
+      var t1 = TM[c1], t2 = TM[c2];
+      S[fid] = {
+        s1: s1, s2: s2, st: st, w: w, _espn: true,
+        n1: t1 ? t1.n : c1, n2: t2 ? t2.n : c2,
+        f1: t1 ? t1.f : "?", f2: t2 ? t2.f : "?"
+      };
+      updated++;
+    });
+  });
+  return updated;
+}
+
+function doSync() {
+  setStatus("Syncing scores...", "live");
+
+  // Step 1: fetch openfootball (all historical results, updated daily)
+  fetch(SYNC_URL, { cache: "no-store" })
+    .then(function(r) {
+      if (!r.ok) throw new Error("HTTP " + r.status);
+      return r.json();
+    })
+    .then(function(data) {
+      var n1 = parseOFB(data);
+
+      // Step 2: fetch ESPN for today's live scores
+      return fetch(ESPN_URL, { cache: "no-store" })
+        .then(function(r) { return r.ok ? r.json() : { events: [] }; })
+        .then(function(espnData) {
+          var n2 = parseESPN(espnData);
+          return n1 + n2;
+        })
+        .catch(function() { return n1; }); // ESPN fail is OK, openfootball is the primary
+    })
+    .then(function(total) {
+      lastSync = new Date();
+      save();
+      renderAll();
+      var t = lastSync.toLocaleTimeString("en-US", { hour: "2-digit", minute: "2-digit" });
+      setStatus(
+        total > 0
+          ? "\u2705 " + total + " score" + (total > 1 ? "s" : "") + " updated \u00b7 " + t
+          : "\u2705 Up to date \u00b7 " + t,
+        "live"
+      );
+    })
+    .catch(function(err) {
+      // openfootball failed — try ESPN only as fallback
+      fetch(ESPN_URL, { cache: "no-store" })
+        .then(function(r) { return r.ok ? r.json() : { events: [] }; })
+        .then(function(espnData) {
+          var n = parseESPN(espnData);
+          lastSync = new Date();
+          save(); renderAll();
+          var t = lastSync.toLocaleTimeString("en-US", { hour: "2-digit", minute: "2-digit" });
+          setStatus("\u26A0\uFE0F ESPN only \u00b7 " + t, "live");
+        })
+        .catch(function() {
+          setStatus("\u274C Sync failed \u2014 check connection", "err");
+        });
+    });
+}
+
+function toggleSync() {
+  var btn = document.getElementById("syncBtn");
+  syncActive = !syncActive;
+  if (syncActive) {
+    btn.textContent = "\u23F9 Stop Sync";
+    btn.classList.add("active");
+    doSync();
+    syncTimer = setInterval(doSync, 120000); // every 2 min (openfootball is daily, no need to hammer)
+  } else {
+    btn.textContent = "\u25B6 Live Sync";
+    btn.classList.remove("active");
+    clearInterval(syncTimer);
+    setStatus("Sync paused", "idle");
+  }
+}
+
+// ── State ──────────────────────────────────────────────────
+var S = {};
+
+function gs(id){
+  return S[id] || {s1:null,s2:null,st:"sch",w:0,n1:"",n2:"",f1:"?",f2:"?"};
+}
+function save(){
+  try{ localStorage.setItem("wc26",JSON.stringify(S)); }catch(e){}
+}
+function load(){
+  try{
+    var d = localStorage.getItem("wc26");
+    if(d) S = JSON.parse(d);
+  }catch(e){}
+}
+
+// Pre-load confirmed real scores (only if no manual entry)
+function seedRealScores(){
+  Object.entries(RS).forEach(function(e){
+    var id=e[0], r=e[1];
+    var existing = S[id];
+    if(!existing || existing._seed){
+      var fx = FX_BY_ID[id];
+      var t1 = fx ? TM[fx.c1] : null;
+      var t2 = fx ? TM[fx.c2] : null;
+      S[id] = {
+        s1:r.s1, s2:r.s2, st:r.st, w:r.w, _seed:true,
+        n1: t1?t1.n:(fx?fx.c1:""), n2: t2?t2.n:(fx?fx.c2:""),
+        f1: t1?t1.f:"?", f2: t2?t2.f:"?"
+      };
+    }
+  });
+  save();
+}
+
+// ── Standings ────────────────────────────────────────────────
+function calcStandings(gl){
+  var ts = GRP[gl], fxs = GFX[gl], r = {};
+  ts.forEach(function(t){ r[t.c]={p:0,w:0,d:0,l:0,gf:0,ga:0,gd:0,pts:0}; });
+  fxs.forEach(function(fx){
+    var s=gs(fx.id);
+    if(["fin","aet","pen","liv"].indexOf(s.st)>-1 && s.s1!==null && s.s2!==null){
+      var a=+s.s1, b=+s.s2;
+      r[fx.c1].p++; r[fx.c2].p++;
+      r[fx.c1].gf+=a; r[fx.c1].ga+=b; r[fx.c1].gd=r[fx.c1].gf-r[fx.c1].ga;
+      r[fx.c2].gf+=b; r[fx.c2].ga+=a; r[fx.c2].gd=r[fx.c2].gf-r[fx.c2].ga;
+      if(a>b){r[fx.c1].w++;r[fx.c1].pts+=3;r[fx.c2].l++;}
+      else if(b>a){r[fx.c2].w++;r[fx.c2].pts+=3;r[fx.c1].l++;}
+      else{r[fx.c1].d++;r[fx.c1].pts++;r[fx.c2].d++;r[fx.c2].pts++;}
+    }
+  });
+  return ts.map(function(t){return Object.assign({},t,r[t.c]);})
+    .sort(function(a,b){return b.pts-a.pts||b.gd-a.gd||b.gf-a.gf||a.n.localeCompare(b.n);});
+}
+
+// ── Bracket propagation ──────────────────────────────────────
+function propagate(){
+  [[1,2],[3,4],[5,6],[7,8],[9,10],[11,12],[13,14],[15,16]].forEach(function(p,i){
+    var ri="R16_"+(i+1); if(!S[ri])S[ri]={s1:null,s2:null,st:"sch",w:0};
+    var wa=gs("R32_"+p[0]),wb=gs("R32_"+p[1]);
+    S[ri].n1=wa.w?(wa.w===1?wa.n1:wa.n2):KOR.R16[i][2]; S[ri].f1=wa.w?(wa.w===1?wa.f1:wa.f2):"?";
+    S[ri].n2=wb.w?(wb.w===1?wb.n1:wb.n2):KOR.R16[i][3]; S[ri].f2=wb.w?(wb.w===1?wb.f1:wb.f2):"?";
+  });
+  [[1,2],[3,4],[5,6],[7,8]].forEach(function(p,i){
+    var qi="QF_"+(i+1); if(!S[qi])S[qi]={s1:null,s2:null,st:"sch",w:0};
+    var wa=gs("R16_"+p[0]),wb=gs("R16_"+p[1]);
+    S[qi].n1=wa.w?(wa.w===1?wa.n1:wa.n2):KOR.QF[i][2]; S[qi].f1=wa.w?(wa.w===1?wa.f1:wa.f2):"?";
+    S[qi].n2=wb.w?(wb.w===1?wb.n1:wb.n2):KOR.QF[i][3]; S[qi].f2=wb.w?(wb.w===1?wb.f1:wb.f2):"?";
+  });
+  [[1,2],[3,4]].forEach(function(p,i){
+    var si="SF_"+(i+1); if(!S[si])S[si]={s1:null,s2:null,st:"sch",w:0};
+    var wa=gs("QF_"+p[0]),wb=gs("QF_"+p[1]);
+    S[si].n1=wa.w?(wa.w===1?wa.n1:wa.n2):KOR.SF[i][2]; S[si].f1=wa.w?(wa.w===1?wa.f1:wa.f2):"?";
+    S[si].n2=wb.w?(wb.w===1?wb.n1:wb.n2):KOR.SF[i][3]; S[si].f2=wb.w?(wb.w===1?wb.f1:wb.f2):"?";
+  });
+  if(!S.FINAL)S.FINAL={s1:null,s2:null,st:"sch",w:0};
+  [1,2].forEach(function(n,i){
+    var w=gs("SF_"+n),k=i===0?"n1":"n2",fk=i===0?"f1":"f2";
+    S.FINAL[k]=w.w?(w.w===1?w.n1:w.n2):KOR.FIN[0][i===0?2:3];
+    S.FINAL[fk]=w.w?(w.w===1?w.f1:w.f2):"?";
+  });
+}
+
+// ── ESPN live sync ───────────────────────────────────────────
+
 // ── ESPN LIVE SYNC ────────────────────────────────────────────────────────────
 // Maps ESPN team abbreviation (reliable) → our team code
 var ESPN_ABB = {
