@@ -369,7 +369,9 @@ body{font-family:"Inter",sans-serif;background:var(--bg);color:var(--tp);min-hei
 <script>
 const GRP={"A": [{"f": "🇲🇽", "n": "Mexico", "c": "MEX"}, {"f": "🇿🇦", "n": "South Africa", "c": "RSA"}, {"f": "🇰🇷", "n": "South Korea", "c": "KOR"}, {"f": "🇨🇿", "n": "Czechia", "c": "CZE"}], "B": [{"f": "🇨🇦", "n": "Canada", "c": "CAN"}, {"f": "🇧🇦", "n": "Bosnia & Herz.", "c": "BIH"}, {"f": "🇶🇦", "n": "Qatar", "c": "QAT"}, {"f": "🇨🇭", "n": "Switzerland", "c": "SUI"}], "C": [{"f": "🇧🇷", "n": "Brasil", "c": "BRA"}, {"f": "🇲🇦", "n": "Morocco", "c": "MAR"}, {"f": "🇭🇹", "n": "Haiti", "c": "HAI"}, {"f": "🏴", "n": "Scotland", "c": "SCO"}], "D": [{"f": "🇺🇸", "n": "USA", "c": "USA"}, {"f": "🇵🇾", "n": "Paraguay", "c": "PAR"}, {"f": "🇦🇺", "n": "Australia", "c": "AUS"}, {"f": "🇹🇷", "n": "Turkiye", "c": "TUR"}], "E": [{"f": "🇩🇪", "n": "Germany", "c": "GER"}, {"f": "🇨🇼", "n": "Curacao", "c": "CUW"}, {"f": "🇨🇮", "n": "Ivory Coast", "c": "CIV"}, {"f": "🇪🇨", "n": "Ecuador", "c": "ECU"}], "F": [{"f": "🇳🇱", "n": "Netherlands", "c": "NED"}, {"f": "🇯🇵", "n": "Japan", "c": "JPN"}, {"f": "🇸🇪", "n": "Sweden", "c": "SWE"}, {"f": "🇹🇳", "n": "Tunisia", "c": "TUN"}], "G": [{"f": "🇧🇪", "n": "Belgium", "c": "BEL"}, {"f": "🇪🇬", "n": "Egypt", "c": "EGY"}, {"f": "🇮🇷", "n": "Iran", "c": "IRN"}, {"f": "🇳🇿", "n": "New Zealand", "c": "NZL"}], "H": [{"f": "🇪🇸", "n": "Espana", "c": "ESP"}, {"f": "🇨🇻", "n": "Cape Verde", "c": "CPV"}, {"f": "🇸🇦", "n": "Saudi Arabia", "c": "KSA"}, {"f": "🇺🇾", "n": "Uruguay", "c": "URU"}], "I": [{"f": "🇫🇷", "n": "France", "c": "FRA"}, {"f": "🇸🇳", "n": "Senegal", "c": "SEN"}, {"f": "🇮🇶", "n": "Iraq", "c": "IRQ"}, {"f": "🇳🇴", "n": "Norway", "c": "NOR"}], "J": [{"f": "🇦🇷", "n": "Argentina", "c": "ARG"}, {"f": "🇩🇿", "n": "Algeria", "c": "ALG"}, {"f": "🇦🇹", "n": "Austria", "c": "AUT"}, {"f": "🇯🇴", "n": "Jordan", "c": "JOR"}], "K": [{"f": "🇵🇹", "n": "Portugal", "c": "POR"}, {"f": "🇨🇩", "n": "DR Congo", "c": "COD"}, {"f": "🇺🇿", "n": "Uzbekistan", "c": "UZB"}, {"f": "🇨🇴", "n": "Colombia", "c": "COL"}], "L": [{"f": "🏴", "n": "England", "c": "ENG"}, {"f": "🇭🇷", "n": "Croatia", "c": "CRO"}, {"f": "🇬🇭", "n": "Ghana", "c": "GHA"}, {"f": "🇵🇦", "n": "Panama", "c": "PAN"}]};
 const GFX={"A": [{"id": "GA1", "md": 1, "c1": "MEX", "c2": "RSA", "d": "Jun 11", "t": "12:00 PM CDT", "v": "Estadio Azteca, Mexico City"}, {"id": "GA2", "md": 1, "c1": "KOR", "c2": "CZE", "d": "Jun 11", "t": "10:00 PM CDT", "v": "Estadio Akron, Guadalajara"}, {"id": "GA3", "md": 2, "c1": "CZE", "c2": "RSA", "d": "Jun 18", "t": "11:00 AM CDT", "v": "Mercedes-Benz Stadium, Atlanta"}, {"id": "GA4", "md": 2, "c1": "MEX", "c2": "KOR", "d": "Jun 18", "t": "8:00 PM CDT", "v": "Estadio Akron, Guadalajara"}, {"id": "GA5", "md": 3, "c1": "CZE", "c2": "MEX", "d": "Jun 24", "t": "9:00 PM CDT", "v": "Estadio Azteca, Mexico City"}, {"id": "GA6", "md": 3, "c1": "RSA", "c2": "KOR", "d": "Jun 24", "t": "9:00 PM CDT", "v": "Estadio BBVA, Monterrey"}], "B": [{"id": "GB1", "md": 1, "c1": "CAN", "c2": "BIH", "d": "Jun 12", "t": "2:00 PM CDT", "v": "BMO Field, Toronto"}, {"id": "GB2", "md": 1, "c1": "SUI", "c2": "QAT", "d": "Jun 13", "t": "2:00 PM CDT", "v": "Levis Stadium, Santa Clara"}, {"id": "GB3", "md": 2, "c1": "SUI", "c2": "BIH", "d": "Jun 18", "t": "11:00 AM CDT", "v": "Estadio Akron, Guadalajara"}, {"id": "GB4", "md": 2, "c1": "CAN", "c2": "QAT", "d": "Jun 18", "t": "2:00 PM CDT", "v": "BC Place, Vancouver"}, {"id": "GB5", "md": 3, "c1": "SUI", "c2": "CAN", "d": "Jun 24", "t": "3:00 PM CDT", "v": "Estadio Azteca, Mexico City"}, {"id": "GB6", "md": 3, "c1": "BIH", "c2": "QAT", "d": "Jun 24", "t": "3:00 PM CDT", "v": "Lumen Field, Seattle"}], "C": [{"id": "GC1", "md": 1, "c1": "BRA", "c2": "MAR", "d": "Jun 13", "t": "5:00 PM CDT", "v": "MetLife Stadium, NJ"}, {"id": "GC2", "md": 1, "c1": "SCO", "c2": "HAI", "d": "Jun 13", "t": "8:00 PM CDT", "v": "Gillette Stadium, Foxborough"}, {"id": "GC3", "md": 2, "c1": "SCO", "c2": "MAR", "d": "Jun 19", "t": "5:00 PM CDT", "v": "Gillette Stadium, Foxborough"}, {"id": "GC4", "md": 2, "c1": "BRA", "c2": "HAI", "d": "Jun 19", "t": "8:00 PM CDT", "v": "Lincoln Financial, Philadelphia"}, {"id": "GC5", "md": 3, "c1": "SCO", "c2": "BRA", "d": "Jun 24", "t": "6:00 PM CDT", "v": "Hard Rock Stadium, Miami"}, {"id": "GC6", "md": 3, "c1": "MAR", "c2": "HAI", "d": "Jun 24", "t": "6:00 PM CDT", "v": "Mercedes-Benz Stadium, Atlanta"}], "D": [{"id": "GD1", "md": 1, "c1": "USA", "c2": "PAR", "d": "Jun 12", "t": "2:00 PM CDT", "v": "SoFi Stadium, Inglewood CA"}, {"id": "GD2", "md": 1, "c1": "AUS", "c2": "TUR", "d": "Jun 13", "t": "11:00 AM CDT", "v": "BC Place, Vancouver"}, {"id": "GD3", "md": 2, "c1": "USA", "c2": "AUS", "d": "Jun 19", "t": "2:00 PM CDT", "v": "Lumen Field, Seattle"}, {"id": "GD4", "md": 2, "c1": "TUR", "c2": "PAR", "d": "Jun 19", "t": "8:00 PM CDT", "v": "Levis Stadium, Santa Clara"}, {"id": "GD5", "md": 3, "c1": "TUR", "c2": "USA", "d": "Jun 25", "t": "10:00 PM CDT", "v": "SoFi Stadium, Inglewood CA"}, {"id": "GD6", "md": 3, "c1": "PAR", "c2": "AUS", "d": "Jun 25", "t": "10:00 PM CDT", "v": "Levis Stadium, Santa Clara"}], "E": [{"id": "GE1", "md": 1, "c1": "CIV", "c2": "CUW", "d": "Jun 12", "t": "8:00 PM CDT", "v": "Estadio Akron, Guadalajara"}, {"id": "GE2", "md": 1, "c1": "GER", "c2": "CUW", "d": "Jun 14", "t": "6:00 PM CDT", "v": "Arrowhead Stadium, Kansas City"}, {"id": "GE3", "md": 2, "c1": "GER", "c2": "CIV", "d": "Jun 20", "t": "3:00 PM CDT", "v": "BMO Field, Toronto"}, {"id": "GE4", "md": 2, "c1": "ECU", "c2": "CUW", "d": "Jun 20", "t": "6:00 PM CDT", "v": "Arrowhead Stadium, Kansas City"}, {"id": "GE5", "md": 3, "c1": "ECU", "c2": "GER", "d": "Jun 25", "t": "4:00 PM CDT", "v": "MetLife Stadium, NJ"}, {"id": "GE6", "md": 3, "c1": "CUW", "c2": "CIV", "d": "Jun 25", "t": "4:00 PM CDT", "v": "Lincoln Financial, Philadelphia"}], "F": [{"id": "GF1", "md": 1, "c1": "NED", "c2": "JPN", "d": "Jun 13", "t": "5:00 PM CDT", "v": "AT&T Stadium, Arlington TX"}, {"id": "GF2", "md": 1, "c1": "SWE", "c2": "TUN", "d": "Jun 14", "t": "9:00 AM CDT", "v": "Estadio Guadalajara"}, {"id": "GF3", "md": 2, "c1": "NED", "c2": "SWE", "d": "Jun 20", "t": "12:00 PM CDT", "v": "NRG Stadium, Houston"}, {"id": "GF4", "md": 2, "c1": "JPN", "c2": "TUN", "d": "Jun 20", "t": "11:00 PM CDT", "v": "Estadio Guadalajara"}, {"id": "GF5", "md": 3, "c1": "JPN", "c2": "SWE", "d": "Jun 25", "t": "7:00 PM CDT", "v": "AT&T Stadium, Arlington TX"}, {"id": "GF6", "md": 3, "c1": "TUN", "c2": "NED", "d": "Jun 25", "t": "7:00 PM CDT", "v": "Arrowhead Stadium, Kansas City"}], "G": [{"id": "GG1", "md": 1, "c1": "BEL", "c2": "EGY", "d": "Jun 15", "t": "2:00 PM CDT", "v": "AT&T Stadium, Arlington TX"}, {"id": "GG2", "md": 1, "c1": "IRN", "c2": "NZL", "d": "Jun 15", "t": "2:00 PM CDT", "v": "BC Place, Vancouver"}, {"id": "GG3", "md": 2, "c1": "BEL", "c2": "IRN", "d": "Jun 21", "t": "2:00 PM CDT", "v": "SoFi Stadium, Inglewood CA"}, {"id": "GG4", "md": 2, "c1": "EGY", "c2": "NZL", "d": "Jun 21", "t": "8:00 PM CDT", "v": "BC Place, Vancouver"}, {"id": "GG5", "md": 3, "c1": "EGY", "c2": "IRN", "d": "Jun 26", "t": "11:00 PM CDT", "v": "Lumen Field, Seattle"}, {"id": "GG6", "md": 3, "c1": "NZL", "c2": "BEL", "d": "Jun 26", "t": "11:00 PM CDT", "v": "BC Place, Vancouver"}], "H": [{"id": "GH1", "md": 1, "c1": "ESP", "c2": "CPV", "d": "Jun 15", "t": "11:00 AM CDT", "v": "Allegiant Stadium, Las Vegas"}, {"id": "GH2", "md": 1, "c1": "KSA", "c2": "URU", "d": "Jun 15", "t": "5:00 PM CDT", "v": "NRG Stadium, Houston"}, {"id": "GH3", "md": 2, "c1": "ESP", "c2": "KSA", "d": "Jun 21", "t": "11:00 AM CDT", "v": "Mercedes-Benz Stadium, Atlanta"}, {"id": "GH4", "md": 2, "c1": "URU", "c2": "CPV", "d": "Jun 21", "t": "5:00 PM CDT", "v": "Hard Rock Stadium, Miami"}, {"id": "GH5", "md": 3, "c1": "CPV", "c2": "KSA", "d": "Jun 26", "t": "8:00 PM CDT", "v": "NRG Stadium, Houston"}, {"id": "GH6", "md": 3, "c1": "URU", "c2": "ESP", "d": "Jun 26", "t": "8:00 PM CDT", "v": "Estadio Akron, Guadalajara"}], "I": [{"id": "GI1", "md": 1, "c1": "FRA", "c2": "SEN", "d": "Jun 16", "t": "2:00 PM CDT", "v": "MetLife Stadium, NJ"}, {"id": "GI2", "md": 1, "c1": "NOR", "c2": "IRQ", "d": "Jun 16", "t": "5:00 PM CDT", "v": "Gillette Stadium, Foxborough"}, {"id": "GI3", "md": 2, "c1": "FRA", "c2": "IRQ", "d": "Jun 22", "t": "4:00 PM CDT", "v": "Lincoln Financial, Philadelphia"}, {"id": "GI4", "md": 2, "c1": "NOR", "c2": "SEN", "d": "Jun 22", "t": "7:00 PM CDT", "v": "MetLife Stadium, NJ"}, {"id": "GI5", "md": 3, "c1": "NOR", "c2": "FRA", "d": "Jun 26", "t": "3:00 PM CDT", "v": "Gillette Stadium, Foxborough"}, {"id": "GI6", "md": 3, "c1": "SEN", "c2": "IRQ", "d": "Jun 26", "t": "3:00 PM CDT", "v": "BMO Field, Toronto"}], "J": [{"id": "GJ1", "md": 1, "c1": "ARG", "c2": "ALG", "d": "Jun 16", "t": "8:00 PM CDT", "v": "Arrowhead Stadium, Kansas City"}, {"id": "GJ2", "md": 1, "c1": "AUT", "c2": "JOR", "d": "Jun 17", "t": "11:00 AM CDT", "v": "SoFi Stadium, Inglewood CA"}, {"id": "GJ3", "md": 2, "c1": "ARG", "c2": "AUT", "d": "Jun 22", "t": "7:00 PM CDT", "v": "Hard Rock Stadium, Miami"}, {"id": "GJ4", "md": 2, "c1": "JOR", "c2": "ALG", "d": "Jun 23", "t": "11:00 AM CDT", "v": "Arrowhead Stadium, Kansas City"}, {"id": "GJ5", "md": 3, "c1": "ALG", "c2": "AUT", "d": "Jun 27", "t": "10:00 PM CDT", "v": "SoFi Stadium, Inglewood CA"}, {"id": "GJ6", "md": 3, "c1": "JOR", "c2": "ARG", "d": "Jun 27", "t": "10:00 PM CDT", "v": "Arrowhead Stadium, Kansas City"}], "K": [{"id": "GK1", "md": 1, "c1": "POR", "c2": "COD", "d": "Jun 17", "t": "2:00 PM CDT", "v": "Lincoln Financial, Philadelphia"}, {"id": "GK2", "md": 1, "c1": "COL", "c2": "UZB", "d": "Jun 17", "t": "5:00 PM CDT", "v": "AT&T Stadium, Arlington TX"}, {"id": "GK3", "md": 2, "c1": "POR", "c2": "UZB", "d": "Jun 23", "t": "2:00 PM CDT", "v": "Allegiant Stadium, Las Vegas"}, {"id": "GK4", "md": 2, "c1": "COL", "c2": "COD", "d": "Jun 23", "t": "5:00 PM CDT", "v": "Lincoln Financial, Philadelphia"}, {"id": "GK5", "md": 3, "c1": "COL", "c2": "POR", "d": "Jun 27", "t": "7:30 PM CDT", "v": "AT&T Stadium, Arlington TX"}, {"id": "GK6", "md": 3, "c1": "COD", "c2": "UZB", "d": "Jun 27", "t": "7:30 PM CDT", "v": "Hard Rock Stadium, Miami"}], "L": [{"id": "GL1", "md": 1, "c1": "ENG", "c2": "CRO", "d": "Jun 17", "t": "2:00 PM CDT", "v": "SoFi Stadium, Inglewood CA"}, {"id": "GL2", "md": 1, "c1": "GHA", "c2": "PAN", "d": "Jun 17", "t": "5:00 PM CDT", "v": "Allegiant Stadium, Las Vegas"}, {"id": "GL3", "md": 2, "c1": "ENG", "c2": "GHA", "d": "Jun 23", "t": "11:00 AM CDT", "v": "MetLife Stadium, NJ"}, {"id": "GL4", "md": 2, "c1": "CRO", "c2": "PAN", "d": "Jun 23", "t": "2:00 PM CDT", "v": "SoFi Stadium, Inglewood CA"}, {"id": "GL5", "md": 3, "c1": "PAN", "c2": "ENG", "d": "Jun 27", "t": "5:00 PM CDT", "v": "Allegiant Stadium, Las Vegas"}, {"id": "GL6", "md": 3, "c1": "CRO", "c2": "GHA", "d": "Jun 27", "t": "5:00 PM CDT", "v": "Hard Rock Stadium, Miami"}]};
-const RS={"GA1":{"s1":2,"s2":0,"st":"fin","w":1},"GA2":{"s1":2,"s2":1,"st":"fin","w":1},"GA3":{"s1":1,"s2":1,"st":"fin","w":0},"GA4":{"s1":1,"s2":0,"st":"fin","w":1},"GA5":{"s1":0,"s2":3,"st":"fin","w":2},"GA6":{"s1":1,"s2":0,"st":"fin","w":1},"GB1":{"s1":1,"s2":1,"st":"fin","w":0},"GB2":{"s1":1,"s2":1,"st":"fin","w":0},"GB3":{"s1":4,"s2":1,"st":"fin","w":1},"GB4":{"s1":6,"s2":0,"st":"fin","w":1},"GB5":{"s1":3,"s2":1,"st":"fin","w":1},"GB6":{"s1":1,"s2":0,"st":"fin","w":1},"GC1":{"s1":1,"s2":1,"st":"fin","w":0},"GC2":{"s1":1,"s2":0,"st":"fin","w":1},"GC3":{"s1":0,"s2":1,"st":"fin","w":2},"GC4":{"s1":3,"s2":0,"st":"fin","w":1},"GC5":{"s1":0,"s2":3,"st":"fin","w":2},"GC6":{"s1":4,"s2":2,"st":"fin","w":1},"GD1":{"s1":4,"s2":1,"st":"fin","w":1},"GD2":{"s1":2,"s2":0,"st":"fin","w":1},"GD3":{"s1":2,"s2":0,"st":"fin","w":1},"GD4":{"s1":0,"s2":1,"st":"fin","w":2},"GD5":{"s1":2,"s2":3,"st":"fin","w":2},"GD6":{"s1":0,"s2":0,"st":"fin","w":0},"GE1":{"s1":1,"s2":0,"st":"fin","w":1},"GE2":{"s1":7,"s2":1,"st":"fin","w":1},"GE3":{"s1":2,"s2":1,"st":"fin","w":1},"GE4":{"s1":0,"s2":0,"st":"fin","w":0},"GE5":{"s1":1,"s2":2,"st":"fin","w":2},"GE6":{"s1":0,"s2":1,"st":"fin","w":2},"GF1":{"s1":2,"s2":2,"st":"fin","w":0},"GF2":{"s1":5,"s2":1,"st":"fin","w":1},"GF3":{"s1":5,"s2":1,"st":"fin","w":1},"GF4":{"s1":4,"s2":0,"st":"fin","w":1},"GF5":{"s1":1,"s2":1,"st":"fin","w":0},"GF6":{"s1":1,"s2":3,"st":"fin","w":2},"GG1":{"s1":1,"s2":1,"st":"fin","w":0},"GG2":{"s1":2,"s2":2,"st":"fin","w":0},"GG3":{"s1":0,"s2":0,"st":"fin","w":0},"GG4":{"s1":3,"s2":1,"st":"fin","w":1},"GH1":{"s1":0,"s2":0,"st":"fin","w":0},"GH2":{"s1":1,"s2":1,"st":"fin","w":0},"GH3":{"s1":4,"s2":0,"st":"fin","w":1},"GH4":{"s1":2,"s2":2,"st":"fin","w":0},"GI1":{"s1":3,"s2":1,"st":"fin","w":1},"GI2":{"s1":4,"s2":1,"st":"fin","w":1},"GI3":{"s1":3,"s2":0,"st":"fin","w":1},"GI4":{"s1":3,"s2":2,"st":"fin","w":1},"GJ1":{"s1":3,"s2":0,"st":"fin","w":1},"GJ2":{"s1":3,"s2":1,"st":"fin","w":1},"GJ3":{"s1":2,"s2":0,"st":"fin","w":1},"GJ4":{"s1":1,"s2":2,"st":"fin","w":2},"GK1":{"s1":1,"s2":1,"st":"fin","w":0},"GK2":{"s1":1,"s2":3,"st":"fin","w":2},"GK3":{"s1":5,"s2":0,"st":"fin","w":1},"GK4":{"s1":1,"s2":0,"st":"fin","w":1},"GL1":{"s1":4,"s2":2,"st":"fin","w":1},"GL2":{"s1":1,"s2":0,"st":"fin","w":1},"GL3":{"s1":0,"s2":0,"st":"fin","w":0},"GL4":{"s1":1,"s2":0,"st":"fin","w":1}};
+const RS={"GA1":{"s1":2,"s2":0,"st":"fin","w":1},"GA2":{"s1":2,"s2":1,"st":"fin","w":1},"GA3":{"s1":1,"s2":1,"st":"fin","w":0},"GA4":{"s1":1,"s2":0,"st":"fin","w":1},"GA5":{"s1":0,"s2":3,"st":"fin","w":2},"GA6":{"s1":1,"s2":0,"st":"fin","w":1},"GB1":{"s1":1,"s2":1,"st":"fin","w":0},"GB2":{"s1":1,"s2":1,"st":"fin","w":0},"GB3":{"s1":4,"s2":1,"st":"fin","w":1},"GB4":{"s1":6,"s2":0,"st":"fin","w":1},"GB5":{"s1":3,"s2":1,"st":"fin","w":1},"GB6":{"s1":1,"s2":0,"st":"fin","w":1},"GC1":{"s1":1,"s2":1,"st":"fin","w":0},"GC2":{"s1":1,"s2":0,"st":"fin","w":1},"GC3":{"s1":0,"s2":1,"st":"fin","w":2},"GC4":{"s1":3,"s2":0,"st":"fin","w":1},"GC5":{"s1":0,"s2":3,"st":"fin","w":2},"GC6":{"s1":4,"s2":2,"st":"fin","w":1},"GD1":{"s1":4,"s2":1,"st":"fin","w":1},"GD2":{"s1":2,"s2":0,"st":"fin","w":1},"GD3":{"s1":2,"s2":0,"st":"fin","w":1},"GD4":{"s1":0,"s2":1,"st":"fin","w":2},"GD5":{"s1":2,"s2":3,"st":"fin","w":2},"GD6":{"s1":0,"s2":0,"st":"fin","w":0},"GE1":{"s1":1,"s2":0,"st":"fin","w":1},"GE2":{"s1":7,"s2":1,"st":"fin","w":1},"GE3":{"s1":2,"s2":1,"st":"fin","w":1},"GE4":{"s1":0,"s2":0,"st":"fin","w":0},"GE5":{"s1":1,"s2":2,"st":"fin","w":2},"GE6":{"s1":0,"s2":1,"st":"fin","w":2},"GF1":{"s1":2,"s2":2,"st":"fin","w":0},"GF2":{"s1":5,"s2":1,"st":"fin","w":1},"GF3":{"s1":5,"s2":1,"st":"fin","w":1},"GF4":{"s1":4,"s2":0,"st":"fin","w":1},"GF5":{"s1":1,"s2":1,"st":"fin","w":0},"GF6":{"s1":1,"s2":3,"st":"fin","w":2},"GG1":{"s1":1,"s2":1,"st":"fin","w":0},"GG2":{"s1":2,"s2":2,"st":"fin","w":0},"GG3":{"s1":0,"s2":0,"st":"fin","w":0},"GG4":{"s1":3,"s2":1,"st":"fin","w":1},"GH1":{"s1":0,"s2":0,"st":"fin","w":0},"GH2":{"s1":1,"s2":1,"st":"fin","w":0},"GH3":{"s1":4,"s2":0,"st":"fin","w":1},"GH4":{"s1":2,"s2":2,"st":"fin","w":0},"GI1":{"s1":3,"s2":1,"st":"fin","w":1},"GI2":{"s1":4,"s2":1,"st":"fin","w":1},"GI3":{"s1":3,"s2":0,"st":"fin","w":1},"GI4":{"s1":3,"s2":2,"st":"fin","w":1},"GJ1":{"s1":3,"s2":0,"st":"fin","w":1},"GJ2":{"s1":3,"s2":1,"st":"fin","w":1},"GJ3":{"s1":2,"s2":0,"st":"fin","w":1},"GJ4":{"s1":1,"s2":2,"st":"fin","w":2},"GK1":{"s1":1,"s2":1,"st":"fin","w":0},"GK2":{"s1":1,"s2":3,"st":"fin","w":2},"GK3":{"s1":5,"s2":0,"st":"fin","w":1},"GK4":{"s1":1,"s2":0,"st":"fin","w":1},"GL1":{"s1":4,"s2":2,"st":"fin","w":1},"GL2":{"s1":1,"s2":0,"st":"fin","w":1},"GL3":{"s1":0,"s2":0,"st":"fin","w":0},"GL4":{"s1":1,"s2":0,"st":"fin","w":1},"GG5":{"s1":1,"s2":1,"st":"fin","w":0},"GG6":{"s1":1,"s2":5,"st":"fin","w":2},"GH5":{"s1":0,"s2":0,"st":"fin","w":0},"GH6":{"s1":0,"s2":1,"st":"fin","w":2},"GI5":{"s1":0,"s2":4,"st":"fin","w":2},"GI6":{"s1":3,"s2":0,"st":"fin","w":1},"GJ5":{"s1":1,"s2":1,"st":"fin","w":0},"GK5":{"s1":0,"s2":0,"st":"fin","w":0},"GK6":{"s1":1,"s2":0,"st":"fin","w":1},"GL5":{"s1":0,"s2":2,"st":"fin","w":2},"GL6":{"s1":2,"s2":1,"st":"fin","w":1}};
+
+const R32_SEED={"R32_1":{"s1":null,"s2":null,"st":"sch","w":0,"n1":"South Africa","n2":"Canada","f1":"🇿🇦","f2":"🇨🇦"},"R32_2":{"s1":null,"s2":null,"st":"sch","w":0,"n1":"Brazil","n2":"Japan","f1":"🇧🇷","f2":"🇯🇵"},"R32_3":{"s1":null,"s2":null,"st":"sch","w":0,"n1":"Germany","n2":"Paraguay","f1":"🇩🇪","f2":"🇵🇾"},"R32_4":{"s1":null,"s2":null,"st":"sch","w":0,"n1":"Netherlands","n2":"Morocco","f1":"🇳🇱","f2":"🇲🇦"},"R32_5":{"s1":null,"s2":null,"st":"sch","w":0,"n1":"Ivory Coast","n2":"Norway","f1":"🇨🇮","f2":"🇳🇴"},"R32_6":{"s1":null,"s2":null,"st":"sch","w":0,"n1":"France","n2":"Sweden","f1":"🇫🇷","f2":"🇸🇪"},"R32_7":{"s1":null,"s2":null,"st":"sch","w":0,"n1":"Mexico","n2":"Ecuador","f1":"🇲🇽","f2":"🇪🇨"},"R32_8":{"s1":null,"s2":null,"st":"sch","w":0,"n1":"England","n2":"DR Congo","f1":"🏴","f2":"🇨🇩"},"R32_9":{"s1":null,"s2":null,"st":"sch","w":0,"n1":"Belgium","n2":"Senegal","f1":"🇧🇪","f2":"🇸🇳"},"R32_10":{"s1":null,"s2":null,"st":"sch","w":0,"n1":"USA","n2":"Bosnia & Herz.","f1":"🇺🇸","f2":"🇧🇦"},"R32_11":{"s1":null,"s2":null,"st":"sch","w":0,"n1":"Spain","n2":"Austria","f1":"🇪🇸","f2":"🇦🇹"},"R32_12":{"s1":null,"s2":null,"st":"sch","w":0,"n1":"Australia","n2":"Egypt","f1":"🇦🇺","f2":"🇪🇬"},"R32_13":{"s1":null,"s2":null,"st":"sch","w":0,"n1":"Colombia","n2":"Ghana","f1":"🇨🇴","f2":"🇬🇭"},"R32_14":{"s1":null,"s2":null,"st":"sch","w":0,"n1":"Portugal","n2":"Croatia","f1":"🇵🇹","f2":"🇭🇷"},"R32_15":{"s1":null,"s2":null,"st":"sch","w":0,"n1":"Argentina","n2":"Cape Verde","f1":"🇦🇷","f2":"🇨🇻"},"R32_16":{"s1":null,"s2":null,"st":"sch","w":0,"n1":"Switzerland","n2":"Algeria","f1":"🇨🇭","f2":"🇩🇿"}};
 const OFB_FIXTURE_MAP={"Mexico|South Africa":"GA1","South Korea|Czech Republic":"GA2","Czech Republic|South Africa":"GA3","Mexico|South Korea":"GA4","Czech Republic|Mexico":"GA5","South Africa|South Korea":"GA6","Canada|Bosnia & Herzegovina":"GB1","Qatar|Switzerland":"GB2","Switzerland|Bosnia & Herzegovina":"GB3","Canada|Qatar":"GB4","Switzerland|Canada":"GB6","Bosnia & Herzegovina|Qatar":"GB5","Brazil|Morocco":"GC1","Haiti|Scotland":"GC2","Scotland|Morocco":"GC3","Brazil|Haiti":"GC4","Scotland|Brazil":"GC5","Morocco|Haiti":"GC6","USA|Paraguay":"GD1","Australia|Turkey":"GD2","USA|Australia":"GD3","Turkey|Paraguay":"GD4","Turkey|USA":"GD5","Paraguay|Australia":"GD6","Germany|Curaçao":"GE2","Ivory Coast|Ecuador":"GE1","Germany|Ivory Coast":"GE3","Ecuador|Curaçao":"GE4","Ecuador|Germany":"GE5","Curaçao|Ivory Coast":"GE6","Netherlands|Japan":"GF1","Sweden|Tunisia":"GF2","Netherlands|Sweden":"GF3","Tunisia|Japan":"GF4","Japan|Sweden":"GF5","Tunisia|Netherlands":"GF6","Belgium|Egypt":"GG1","Iran|New Zealand":"GG2","Belgium|Iran":"GG3","New Zealand|Egypt":"GG4","Egypt|Iran":"GG5","New Zealand|Belgium":"GG6","Spain|Cape Verde":"GH1","Saudi Arabia|Uruguay":"GH2","Spain|Saudi Arabia":"GH3","Uruguay|Cape Verde":"GH4","Cape Verde|Saudi Arabia":"GH5","Uruguay|Spain":"GH6","France|Senegal":"GI1","Iraq|Norway":"GI2","France|Iraq":"GI3","Norway|Senegal":"GI4","Norway|France":"GI5","Senegal|Iraq":"GI6","Argentina|Algeria":"GJ1","Austria|Jordan":"GJ2","Argentina|Austria":"GJ3","Jordan|Algeria":"GJ4","Algeria|Austria":"GJ5","Jordan|Argentina":"GJ6","Portugal|DR Congo":"GK1","Uzbekistan|Colombia":"GK2","Portugal|Uzbekistan":"GK3","Colombia|DR Congo":"GK4","Colombia|Portugal":"GK5","DR Congo|Uzbekistan":"GK6","England|Croatia":"GL1","Ghana|Panama":"GL2","England|Ghana":"GL3","Panama|Croatia":"GL4","Panama|England":"GL5","Croatia|Ghana":"GL6"};
 </script>
 <script>
@@ -390,7 +392,7 @@ Object.values(GFX).flat().forEach(function(fx){
 });
 
 var KOR = {
-  R32:[["R32_1","R32-1","1st A","2nd B","Jul 4"],["R32_2","R32-2","1st C","2nd D","Jul 4"],["R32_3","R32-3","1st E","2nd F","Jul 4"],["R32_4","R32-4","1st G","2nd H","Jul 5"],["R32_5","R32-5","1st I","2nd J","Jul 5"],["R32_6","R32-6","1st K","2nd L","Jul 5"],["R32_7","R32-7","Best 3rd","Best 3rd","Jul 6"],["R32_8","R32-8","Best 3rd","Best 3rd","Jul 6"],["R32_9","R32-9","2nd A","1st B","Jul 7"],["R32_10","R32-10","2nd C","1st D","Jul 7"],["R32_11","R32-11","2nd E","1st F","Jul 7"],["R32_12","R32-12","2nd G","1st H","Jul 8"],["R32_13","R32-13","2nd I","1st J","Jul 8"],["R32_14","R32-14","2nd K","1st L","Jul 8"],["R32_15","R32-15","Best 3rd","Best 3rd","Jul 9"],["R32_16","R32-16","Best 3rd","Best 3rd","Jul 9"]],
+  R32:[["R32_1", "R32-1", "South Africa", "Canada", "Jun 28"], ["R32_2", "R32-2", "Brazil", "Japan", "Jun 29"], ["R32_3", "R32-3", "Germany", "Paraguay", "Jun 29"], ["R32_4", "R32-4", "Netherlands", "Morocco", "Jun 29"], ["R32_5", "R32-5", "Ivory Coast", "Norway", "Jun 30"], ["R32_6", "R32-6", "France", "Sweden", "Jun 30"], ["R32_7", "R32-7", "Mexico", "Ecuador", "Jun 30"], ["R32_8", "R32-8", "England", "DR Congo", "Jul 1"], ["R32_9", "R32-9", "Belgium", "Senegal", "Jul 1"], ["R32_10", "R32-10", "USA", "Bosnia & Herz.", "Jul 1"], ["R32_11", "R32-11", "Spain", "Austria", "Jul 3"], ["R32_12", "R32-12", "Australia", "Egypt", "Jul 3"], ["R32_13", "R32-13", "Colombia", "Ghana", "Jul 3"], ["R32_14", "R32-14", "Portugal", "Croatia", "Jul 3"], ["R32_15", "R32-15", "Argentina", "Cape Verde", "Jul 4"], ["R32_16", "R32-16", "Switzerland", "Algeria", "Jul 4"]],
   R16:[["R16_1","R16-1","W R32-1","W R32-2","Jul 11"],["R16_2","R16-2","W R32-3","W R32-4","Jul 11"],["R16_3","R16-3","W R32-5","W R32-6","Jul 12"],["R16_4","R16-4","W R32-7","W R32-8","Jul 12"],["R16_5","R16-5","W R32-9","W R32-10","Jul 13"],["R16_6","R16-6","W R32-11","W R32-12","Jul 13"],["R16_7","R16-7","W R32-13","W R32-14","Jul 14"],["R16_8","R16-8","W R32-15","W R32-16","Jul 14"]],
   QF:[["QF_1","QF-1","W R16-1","W R16-2","Jul 18"],["QF_2","QF-2","W R16-3","W R16-4","Jul 18"],["QF_3","QF-3","W R16-5","W R16-6","Jul 19"],["QF_4","QF-4","W R16-7","W R16-8","Jul 19"]],
   SF:[["SF_1","SF-1","W QF-1","W QF-2","Jul 14"],["SF_2","SF-2","W QF-3","W QF-4","Jul 15"]],
@@ -415,18 +417,29 @@ function load(){
 
 // Pre-load confirmed real scores (only if no manual entry)
 function seedRealScores(){
+  // Seed confirmed group stage scores
   Object.entries(RS).forEach(function(e){
     var id=e[0], r=e[1];
-    var existing = S[id];
-    if(!existing || existing._seed){
-      var fx = FX_BY_ID[id];
-      var t1 = fx ? TM[fx.c1] : null;
-      var t2 = fx ? TM[fx.c2] : null;
-      S[id] = {
-        s1:r.s1, s2:r.s2, st:r.st, w:r.w, _seed:true,
-        n1: t1?t1.n:(fx?fx.c1:""), n2: t2?t2.n:(fx?fx.c2:""),
-        f1: t1?t1.f:"?", f2: t2?t2.f:"?"
-      };
+    var existing=S[id];
+    if(!existing||existing._seed){
+      var fx=FX_BY_ID[id];
+      var t1=fx?TM[fx.c1]:null, t2=fx?TM[fx.c2]:null;
+      S[id]={s1:r.s1,s2:r.s2,st:r.st,w:r.w,_seed:true,
+        n1:t1?t1.n:(fx?fx.c1:""),n2:t2?t2.n:(fx?fx.c2:""),
+        f1:t1?t1.f:"?",f2:t2?t2.f:"?"};
+    }
+  });
+  // Seed confirmed R32 matchups with real team names/flags
+  Object.entries(R32_SEED).forEach(function(e){
+    var id=e[0], r=e[1];
+    var existing=S[id];
+    if(!existing||existing._seed||!existing._manual){
+      if(!S[id])S[id]={s1:null,s2:null,st:"sch",w:0};
+      if(!S[id]._manual){
+        S[id].n1=r.n1; S[id].f1=r.f1;
+        S[id].n2=r.n2; S[id].f2=r.f2;
+        S[id]._seed=true;
+      }
     }
   });
   save();
@@ -564,6 +577,33 @@ function parseOFB(data) {
     };
     updated++;
   });
+  // Parse knockout matches
+  matches.forEach(function(m){
+    if(!m.score||!m.score.ft) return;
+    var n1=(m.team1||"").trim(), n2=(m.team2||"").trim();
+    var koMap={
+      "South Africa|Canada":"R32_1","Brazil|Japan":"R32_2",
+      "Germany|Paraguay":"R32_3","Netherlands|Morocco":"R32_4",
+      "Ivory Coast|Norway":"R32_5","Cote d'Ivoire|Norway":"R32_5",
+      "France|Sweden":"R32_6","Mexico|Ecuador":"R32_7",
+      "England|DR Congo":"R32_8","Belgium|Senegal":"R32_9",
+      "United States|Bosnia & Herzegovina":"R32_10",
+      "Spain|Austria":"R32_11","Australia|Egypt":"R32_12",
+      "Colombia|Ghana":"R32_13","Portugal|Croatia":"R32_14",
+      "Argentina|Cape Verde":"R32_15","Argentina|Cabo Verde":"R32_15",
+      "Switzerland|Algeria":"R32_16"
+    };
+    var fid=koMap[n1+"|"+n2];
+    if(!fid) return;
+    var s1=m.score.ft[0], s2=m.score.ft[1];
+    var st=m.score.p?"pen":m.score.et?"aet":"fin";
+    if(m.score.et){s1=m.score.et[0];s2=m.score.et[1];}
+    var w=s1>s2?1:s2>s1?2:0;
+    var cur=S[fid]||{};
+    if(cur._manual) return;
+    S[fid]=Object.assign({},S[fid]||{},{s1:s1,s2:s2,st:st,w:w,_ofb:true});
+    updated++;
+  });
   return updated;
 }
 
@@ -691,18 +731,29 @@ function load(){
 
 // Pre-load confirmed real scores (only if no manual entry)
 function seedRealScores(){
+  // Seed confirmed group stage scores
   Object.entries(RS).forEach(function(e){
     var id=e[0], r=e[1];
-    var existing = S[id];
-    if(!existing || existing._seed){
-      var fx = FX_BY_ID[id];
-      var t1 = fx ? TM[fx.c1] : null;
-      var t2 = fx ? TM[fx.c2] : null;
-      S[id] = {
-        s1:r.s1, s2:r.s2, st:r.st, w:r.w, _seed:true,
-        n1: t1?t1.n:(fx?fx.c1:""), n2: t2?t2.n:(fx?fx.c2:""),
-        f1: t1?t1.f:"?", f2: t2?t2.f:"?"
-      };
+    var existing=S[id];
+    if(!existing||existing._seed){
+      var fx=FX_BY_ID[id];
+      var t1=fx?TM[fx.c1]:null, t2=fx?TM[fx.c2]:null;
+      S[id]={s1:r.s1,s2:r.s2,st:r.st,w:r.w,_seed:true,
+        n1:t1?t1.n:(fx?fx.c1:""),n2:t2?t2.n:(fx?fx.c2:""),
+        f1:t1?t1.f:"?",f2:t2?t2.f:"?"};
+    }
+  });
+  // Seed confirmed R32 matchups with real team names/flags
+  Object.entries(R32_SEED).forEach(function(e){
+    var id=e[0], r=e[1];
+    var existing=S[id];
+    if(!existing||existing._seed||!existing._manual){
+      if(!S[id])S[id]={s1:null,s2:null,st:"sch",w:0};
+      if(!S[id]._manual){
+        S[id].n1=r.n1; S[id].f1=r.f1;
+        S[id].n2=r.n2; S[id].f2=r.f2;
+        S[id]._seed=true;
+      }
     }
   });
   save();
@@ -963,18 +1014,29 @@ function load(){
 
 // Pre-load confirmed real scores (only if no manual entry)
 function seedRealScores(){
+  // Seed confirmed group stage scores
   Object.entries(RS).forEach(function(e){
     var id=e[0], r=e[1];
-    var existing = S[id];
-    if(!existing || existing._seed){
-      var fx = FX_BY_ID[id];
-      var t1 = fx ? TM[fx.c1] : null;
-      var t2 = fx ? TM[fx.c2] : null;
-      S[id] = {
-        s1:r.s1, s2:r.s2, st:r.st, w:r.w, _seed:true,
-        n1: t1?t1.n:(fx?fx.c1:""), n2: t2?t2.n:(fx?fx.c2:""),
-        f1: t1?t1.f:"?", f2: t2?t2.f:"?"
-      };
+    var existing=S[id];
+    if(!existing||existing._seed){
+      var fx=FX_BY_ID[id];
+      var t1=fx?TM[fx.c1]:null, t2=fx?TM[fx.c2]:null;
+      S[id]={s1:r.s1,s2:r.s2,st:r.st,w:r.w,_seed:true,
+        n1:t1?t1.n:(fx?fx.c1:""),n2:t2?t2.n:(fx?fx.c2:""),
+        f1:t1?t1.f:"?",f2:t2?t2.f:"?"};
+    }
+  });
+  // Seed confirmed R32 matchups with real team names/flags
+  Object.entries(R32_SEED).forEach(function(e){
+    var id=e[0], r=e[1];
+    var existing=S[id];
+    if(!existing||existing._seed||!existing._manual){
+      if(!S[id])S[id]={s1:null,s2:null,st:"sch",w:0};
+      if(!S[id]._manual){
+        S[id].n1=r.n1; S[id].f1=r.f1;
+        S[id].n2=r.n2; S[id].f2=r.f2;
+        S[id]._seed=true;
+      }
     }
   });
   save();
@@ -1337,7 +1399,6 @@ function updateBracketFromStandings(){
 }
 
 function renderBracket(){
-  updateBracketFromStandings();
   propagate();
   var champ=gs("FINAL");
   var cn=champ.w?(champ.w===1?champ.n1:champ.n2):"";
